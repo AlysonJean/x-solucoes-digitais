@@ -1,0 +1,16 @@
+# Limpa o cache do jsDelivr quando o selo.js muda, para todos os sites pegarem a versão nova na hora
+# (sem isso, o jsDelivr pode servir a versão antiga por até 7 dias).
+name: Limpar cache do selo
+
+on:
+  push:
+    branches: [main]
+    paths: ['selo/selo.js']
+  workflow_dispatch:
+
+jobs:
+  limpar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Limpar cache do jsDelivr
+        run: curl -fsS "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/selo/selo.js"
