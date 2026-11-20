@@ -1,0 +1,8 @@
+# Texto sempre com quebra de linha LF no repositório (evita diffs falsos entre Windows e Linux)
+* text=auto eol=lf
+
+# Binários
+*.png binary
+*.jpg binary
+*.ttf binary
+*.woff2 binary

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selo X Soluções Digitais — exemplo</title>
+<script src="selo.js" defer></script>
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #F4F3EE; color: #14161B; }
+  main { max-width: 880px; margin: 0 auto; padding: 32px 16px 64px; display: flex; flex-direction: column; gap: 24px; }
+  h1 { margin: 0; font-size: 24px; }
+  h2 { margin: 0 0 8px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #5A5F6B; }
+  footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 24px; border-radius: 12px; }
+  .claro { background: #FFFFFF; color: #5A5F6B; border: 1px solid #E3E1DA; }
+  .escuro { background: #1D2027; color: #A9AEBA; }
+  .variantes { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Selo de assinatura — exemplos</h1>
+
+  <section>
+    <h2>Rodapé claro</h2>
+    <footer class="claro">
+      <span>© 2026 Nome do cliente</span>
+      <x-selo site="exemplo-claro"><a href="https://wa.me/5531975808477" style="color: inherit">Desenvolvido por X Soluções Digitais</a></x-selo>
+    </footer>
+  </section>
+
+  <section>
+    <h2>Rodapé escuro (o selo se adapta sozinho)</h2>
+    <footer class="escuro">
+      <span>© 2026 Nome do cliente</span>
+      <x-selo site="exemplo-escuro"><a href="https://wa.me/5531975808477" style="color: inherit">Desenvolvido por X Soluções Digitais</a></x-selo>
+    </footer>
+  </section>
+
+  <section>
+    <h2>Variantes: completo, compacto e ícone</h2>
+    <footer class="claro">
+      <div class="variantes">
+        <x-selo site="exemplo"></x-selo>
+        <x-selo site="exemplo" variante="compacto"></x-selo>
+        <x-selo site="exemplo" variante="icone"></x-selo>
+      </div>
+    </footer>
+    <footer class="escuro" style="margin-top: 12px">
+      <div class="variantes">
+        <x-selo site="exemplo"></x-selo>
+        <x-selo site="exemplo" variante="compacto"></x-selo>
+        <x-selo site="exemplo" variante="icone"></x-selo>
+      </div>
+    </footer>
+  </section>
+</main>
+</body>
+</html>
