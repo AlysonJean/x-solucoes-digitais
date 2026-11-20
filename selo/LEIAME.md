@@ -16,6 +16,7 @@ Hospede o arquivo num lugar só, e todos os sites carregam dele. Assim, uma muda
 2. O endereço do selo fica: `https://cdn.jsdelivr.net/gh/AlysonJean/x-solucoes-digitais@main/selo/selo.js`
 3. O jsDelivr guarda cópia em cache. A action `.github/workflows/limpar-cache-selo.yml` limpa o cache sozinha a cada push que altera o `selo.js`. Para limpar na mão, acesse
    `https://purge.jsdelivr.net/gh/AlysonJean/x-solucoes-digitais@main/selo/selo.js`.
+4. O navegador também guarda cópia: o jsDelivr manda guardar por **7 dias**. Por isso os exemplos abaixo põem a hora no endereço (`?h=`, horas inteiras desde 1970, em UTC). A cada hora o endereço muda, o navegador busca a versão nova, e uma mudança no selo chega a todo mundo em até uma hora. O jsDelivr ignora o parâmetro no cache dele, então todos os visitantes dividem a mesma cópia. A hora é calculada no navegador, e não no servidor, porque o HTML da página costuma vir de cache.
 
 Quando tiver o domínio próprio, é só mover para `https://xsolucoesdigitais.com.br/selo.js` e trocar o endereço nos sites.
 
@@ -23,11 +24,21 @@ Quando tiver o domínio próprio, é só mover para `https://xsolucoesdigitais.c
 
 ### HTML puro, WordPress, qualquer site
 
-Antes de `</body>`, ou no `<head>` com `defer`:
+Antes de `</body>`:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/AlysonJean/x-solucoes-digitais@main/selo/selo.js" defer></script>
+<script>
+(function () {
+  var s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/gh/AlysonJean/x-solucoes-digitais@main/selo/selo.js?h=' + Math.floor(Date.now() / 36e5);
+  s.async = true;
+  s.referrerPolicy = 'no-referrer';
+  document.head.appendChild(s);
+})();
+</script>
 ```
+
+Se a CSP do site bloquear script dentro do HTML (`script-src` sem `'unsafe-inline'`), ponha esse código num arquivo `.js` do próprio site e carregue o arquivo com `<script src="..." defer>`.
 
 No rodapé:
 
@@ -39,7 +50,7 @@ No rodapé:
 
 ### React com Vite (ex.: X Produções)
 
-1. Coloque o `<script ... defer>` acima no `index.html`.
+1. Peça o script pelo rodapé, com a hora no endereço. Exemplo pronto, com testes: `src/utils/seloAssinatura.ts` da X Produções (`carregarSeloAssinatura()`, chamada num `useEffect` do rodapé). Também serve o código da seção acima no `index.html`.
 2. No componente do rodapé:
 
 ```jsx
@@ -48,18 +59,43 @@ No rodapé:
 </x-selo>
 ```
 
-### Next.js (ex.: X-Ofertas)
+### Next.js (ex.: PrepareC, Xcotas, LuhMoura)
+
+Crie `components/selo-script.tsx`:
+
+```tsx
+'use client';
+
+import { useEffect } from 'react';
+
+const SELO_URL = 'https://cdn.jsdelivr.net/gh/AlysonJean/x-solucoes-digitais@main/selo/selo.js';
+
+export function SeloScript() {
+  useEffect(() => {
+    if (customElements.get('x-selo') || document.querySelector('script[data-x-selo]')) return;
+    const script = document.createElement('script');
+    script.src = `${SELO_URL}?h=${Math.floor(Date.now() / 3_600_000)}`;
+    script.async = true;
+    script.referrerPolicy = 'no-referrer';
+    script.dataset.xSelo = '';
+    document.head.appendChild(script);
+  }, []);
+  return null;
+}
+```
 
 No componente do rodapé:
 
 ```tsx
-import Script from 'next/script';
+import { SeloScript } from '@/components/selo-script';
 
-<x-selo site="xofertas.com.br">
+<x-selo site="preparec.com.br">
   <a href="https://wa.me/5531975808477" style="color: inherit">Desenvolvido por X Soluções Digitais</a>
 </x-selo>
-<Script src="https://cdn.jsdelivr.net/gh/AlysonJean/x-solucoes-digitais@main/selo/selo.js" strategy="lazyOnload" />
+<SeloScript />
 ```
+
+Se o site tiver CSP, libere `https://cdn.jsdelivr.net` no `script-src`. Outra saída, usada no Xofertas: servir o selo pelo próprio site, numa rota `/selo.js` que busca o arquivo no GitHub (`src/app/selo.js/route.ts` do Xofertas).
 
 Com TypeScript, crie `x-selo.d.ts` para o editor aceitar a tag:
 
