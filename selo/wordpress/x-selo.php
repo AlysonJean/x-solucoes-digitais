@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Selo X Soluções Digitais
  * Description: Coloca o selo "Desenvolvido por X Soluções Digitais" no rodapé. O selo.js é buscado no GitHub pelo servidor e entregue pelo próprio site (/?x-selo=js), então o navegador de quem visita não fala com nenhum terceiro.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: X Soluções Digitais
  *
  * Instalação: copie este arquivo para wp-content/mu-plugins/ (plugin obrigatório, não aparece
@@ -48,8 +48,9 @@ add_action(
 );
 
 /**
- * Põe o selo no rodapé do tema ou do Elementor: ao lado do link da política de privacidade,
- * se houver, ou numa faixa no fim do rodapé. Página sem rodapé fica sem selo.
+ * Põe o selo no rodapé do tema ou do Elementor: no lugar de um link "Desenvolvido por..." que
+ * já exista, ao lado do link da política de privacidade, ou numa faixa no fim do rodapé, nessa
+ * ordem. Página sem rodapé fica sem selo.
  * O endereço do script leva a hora (?h=) para uma mudança no selo chegar em até 1 hora,
  * mesmo com a página guardada em cache.
  */
@@ -69,8 +70,14 @@ add_action(
 	var modelo = document.getElementById('x-selo-modelo');
 	if (!rodape || !modelo || document.querySelector('x-selo')) return;
 	var selo = modelo.content.cloneNode(true);
+	var credito = null;
+	Array.prototype.forEach.call(rodape.querySelectorAll('a'), function (a) {
+		if (!credito && /^\s*desenvolvido por/i.test(a.textContent)) credito = a;
+	});
 	var politica = rodape.querySelector('a[href*="privacidade"], a[href*="privacy"]');
-	if (politica) {
+	if (credito) {
+		credito.parentNode.replaceChild(selo, credito);
+	} else if (politica) {
 		var grupo = document.createElement('span');
 		grupo.style.cssText = 'display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px 20px';
 		politica.parentNode.insertBefore(grupo, politica);

@@ -48,11 +48,11 @@ No rodapé:
 </x-selo>
 ```
 
-### WordPress (ex.: 2R Gestão Executiva)
+### WordPress (ex.: 2R Gestão Executiva, AFORTIS, Domus Partners)
 
 Copie `wordpress/x-selo.php` para `wp-content/mu-plugins/` do site e limpe o cache (`wp litespeed-purge all`, se o site usar LiteSpeed). Não precisa mexer no tema nem no Elementor:
 
-- o selo entra no rodapé, ao lado do link da política de privacidade, ou numa faixa no fim do rodapé, se não houver esse link;
+- o selo entra no rodapé, nesta ordem: no lugar de um link "Desenvolvido por..." que já exista, ao lado do link da política de privacidade, ou numa faixa no fim do rodapé;
 - o `selo.js` sai pelo próprio site (`/?x-selo=js`): o servidor busca o arquivo no GitHub e guarda por 1 hora. O navegador de quem visita não fala com o jsDelivr, então a política de privacidade do site não precisa citar mais ninguém;
 - o atributo `site` vem do domínio do WordPress.
 
