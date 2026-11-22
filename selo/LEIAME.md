@@ -48,6 +48,16 @@ No rodapé:
 </x-selo>
 ```
 
+### WordPress (ex.: 2R Gestão Executiva)
+
+Copie `wordpress/x-selo.php` para `wp-content/mu-plugins/` do site e limpe o cache (`wp litespeed-purge all`, se o site usar LiteSpeed). Não precisa mexer no tema nem no Elementor:
+
+- o selo entra no rodapé, ao lado do link da política de privacidade, ou numa faixa no fim do rodapé, se não houver esse link;
+- o `selo.js` sai pelo próprio site (`/?x-selo=js`): o servidor busca o arquivo no GitHub e guarda por 1 hora. O navegador de quem visita não fala com o jsDelivr, então a política de privacidade do site não precisa citar mais ninguém;
+- o atributo `site` vem do domínio do WordPress.
+
+Para tirar o selo, apague o arquivo e limpe o cache.
+
 ### React com Vite (ex.: X Produções)
 
 1. Peça o script pelo rodapé, com a hora no endereço. Exemplo pronto, com testes: `src/utils/seloAssinatura.ts` da X Produções (`carregarSeloAssinatura()`, chamada num `useEffect` do rodapé). Também serve o código da seção acima no `index.html`.
