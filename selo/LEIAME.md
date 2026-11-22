@@ -44,7 +44,7 @@ No rodapé:
 
 ```html
 <x-selo site="nome-do-site">
-  <a href="https://wa.me/5531975808477" style="color: inherit">Desenvolvido por X Soluções Digitais</a>
+  <a href="https://wa.me/5531935027635" style="color: inherit">Desenvolvido por X Soluções Digitais</a>
 </x-selo>
 ```
 
@@ -55,7 +55,7 @@ No rodapé:
 
 ```jsx
 <x-selo site="xproducoeseeventos.com.br">
-  <a href="https://wa.me/5531975808477" style="color: inherit">Desenvolvido por X Soluções Digitais</a>
+  <a href="https://wa.me/5531935027635" style="color: inherit">Desenvolvido por X Soluções Digitais</a>
 </x-selo>
 ```
 
@@ -90,7 +90,7 @@ No componente do rodapé:
 import { SeloScript } from '@/components/selo-script';
 
 <x-selo site="preparec.com.br">
-  <a href="https://wa.me/5531975808477" style="color: inherit">Desenvolvido por X Soluções Digitais</a>
+  <a href="https://wa.me/5531935027635" style="color: inherit">Desenvolvido por X Soluções Digitais</a>
 </x-selo>
 <SeloScript />
 ```

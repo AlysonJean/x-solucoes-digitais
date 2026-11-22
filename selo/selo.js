@@ -17,7 +17,7 @@
     // Quando o portfólio estiver no ar, coloque a URL aqui (ex.: 'https://xsolucoesdigitais.com.br').
     // Enquanto estiver vazio, o selo abre o WhatsApp com o nome do site na mensagem.
     portfolio: '',
-    whatsapp: '5531975808477',
+    whatsapp: '5531935027635',
     nome: 'X Soluções Digitais',
     prefixo: 'Desenvolvido por',
     azul: '#3D5AFE',      // azul usado em fundo claro
